@@ -24,24 +24,30 @@ z = z + np.random.normal(noise_mean,noise_sig,size=(nbins,nchan+1))
 z = z[:,:-1]
 
 # plot stuff in color!
+plb.subplot(2,1,1)
 plb.pcolormesh(x,y,z,vmin=z.min(),vmax=z.max())
 plb.axis([x.min(),x.max(),y.min(),y.max()])
+plb.ylabel('Original')
 plb.colorbar()
-plb.show()
+#plb.show()
 
 # denoise.
+print 'Denoising...'
 z_wt = pp.wavelet2D(z,ncycle=np.int(nbins),threshtype='soft')
 
 # plot reconstructed data in color!
 diff = z-z_wt
 
+plb.subplot(2,1,2)
 plb.pcolormesh(x,y,z_wt,vmin=z_wt.min(),vmax=z_wt.max())
 plb.axis([x.min(),x.max(),y.min(),y.max()])
+plb.ylabel('Denoised')
 plb.colorbar()
 plb.show()
 
 plb.pcolormesh(x,y,diff,vmin=diff.min(),vmax=diff.max())
 plb.axis([x.min(),x.max(),y.min(),y.max()])
+plb.ylabel('Residual')
 plb.colorbar()
 plb.show()
 
