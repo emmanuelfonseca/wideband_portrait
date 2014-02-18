@@ -13,3 +13,4 @@ Current available algorithms use: wavelet thresholding... and more to come!
  - numpy
  - PyWavelet (http://www.pybytes.com/pywavelets/)
  - matplotlib
+ - aspProfile (provided here)
