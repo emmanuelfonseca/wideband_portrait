@@ -6,7 +6,7 @@ import matplotlib.pylab as plb
 import sys
 
 freq  = 1400.
-nchan = 16
+nchan = 32
 nbins = 1024*1
 bw    = 800.       # MHz
 
@@ -33,7 +33,9 @@ plb.colorbar()
 
 # denoise.
 print 'Denoising...'
-z_wt = pp.wavelet2D(z,ncycle=np.int(nbins),threshtype='soft')
+#z_wt = pp.wavelet2D(z,ncycle=np.int(nbins),threshtype='soft')
+z_wt = pp.pca(z)  
+
 
 # plot reconstructed data in color!
 diff = z-z_wt

@@ -9,9 +9,9 @@ import sys
 
 # set fake-data params.
 freq  = 1400.
-nchan = 16
+nchan = 512
 nbins = 1024*1
-bw    = 64.    # MHz
+bw    = 800.    # MHz
 
 # get grid settings.
 dx, dy = 1./np.float(nbins), np.float(bw/nchan)
@@ -22,13 +22,13 @@ mean, sig = 0.5, 0.5
 z = np.exp(-((x-mean)/(sig*y/freq/4.))**2)+np.exp(-((x-0.25)/(sig*y/freq/10.))**2)
 
 # add some noise, and remove last 'spare' channel.
-noise_mean, noise_sig = 0., 0.04
+noise_mean, noise_sig = 0., 0.05
 z = z + np.random.normal(noise_mean,noise_sig,size=(nbins,nchan+1))
 z = z[:,:-1]
 
 # "scintillate."
 for i in range(nchan):
-  z[:,i] = z[:,i]*np.random.uniform(0.8,1.0)
+  z[:,i] = z[:,i]*np.random.uniform(0.9,1.1)
 
 # plot stuff in color!
 plb.pcolormesh(x,y,z,vmin=z.min(),vmax=z.max())
@@ -37,9 +37,10 @@ plb.colorbar()
 plb.show()
 
 # denoise.
-z_wt = pp.wavelet2D(z,ncycle=nbins,threshtype='soft')
+#z_wt = pp.wavelet2D(z,ncycle=nbins,threshtype='soft')
+z_wt = pp.pca(z)
 
-# plot wavelet-denoised data in color!
+# plot denoised data in color!
 diff = z-z_wt
 
 plb.pcolormesh(x,y,z_wt,vmin=z_wt.min(),vmax=z_wt.max())

@@ -10,7 +10,7 @@ There are several different types of signal-smoothing techniques
 available: 
 
  - wavelet thresholding
- - principal component analysis (coming soon)
+ - principal component analysis 
  - total-variation denoising (coming soon)
 
 ... and more to come!
